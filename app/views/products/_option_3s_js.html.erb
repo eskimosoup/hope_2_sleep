@@ -1,0 +1,9 @@
+<% if @product.option_3_name? %>
+  <p>
+    <% if defined? @option_3s %>
+      <%= select_tag :option_3, @option_3s %>
+    <% else %>
+      <%= select_tag :option_3, "<option>#{@product.option_3_name.pluralize}</option>", :disabled => true %>
+    <% end %>
+  </p>
+<% end %>

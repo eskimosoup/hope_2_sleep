@@ -1,0 +1,7 @@
+#no_js_form {
+  display: none;
+}
+
+#js_form {
+  display: block;
+}

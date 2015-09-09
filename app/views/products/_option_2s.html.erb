@@ -1,0 +1,23 @@
+<% form_tag add_to_baskets_path do %>
+  <%= hidden_field_tag :product_id, @product.id %>
+  <%= hidden_field_tag :option_1, @option_1 %>
+
+  <% if @product.option_2_name? %>
+    <p>
+      <% if defined?(@option_2s) && !defined?(@option_2) %>
+        <%= select_tag :option_2, @option_2s %>
+        <% if @product.option_3_name? %>
+          <%= submit_tag "Select #{@product.option_2_name}" %>
+        <% else %>
+          <%= submit_tag "Add to Basket" %>
+        <% end %>
+      <% elsif defined? @option_2 %>
+        <%= select_tag :option_2, "<option value=''>#{@option_2}</option>", :disabled => true %>
+        <%= submit_tag "Reset #{@product.option_2_name}" %>
+      <% else %>
+        <%= select_tag :option_2, "<option>#{@product.option_2_name.pluralize}</option>", :disabled => true %>
+      <% end %>
+    </p>
+  <% end %>
+  
+<% end %>

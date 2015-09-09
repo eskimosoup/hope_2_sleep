@@ -1,0 +1,129 @@
+/*--Main--*/
+body {
+	font-family: Arial, Tahoma, sans-serif; 
+	font-size: 12px;
+	color: #333333; 
+	background-color: #FFFFFF; 
+	margin: 20px 0px 20px 0px;
+	text-align: center;
+}
+
+.maincontainer {
+	text-align: left;
+	margin-left: auto; 
+	margin-right: auto; 
+	width: 700px;
+	line-height: 17px;
+}
+
+
+p {
+	margin: 0px; 
+	padding: 8px 0px 8px 0px;
+}
+
+
+hr {
+	border: 0px; 
+	border-bottom: 2px dotted #002e50; 
+	height: 0px; 
+	clear: left; 
+	margin: 0px 0px 20px 0px; 
+	padding: 20px 0px 0px 0px;
+}
+
+h1 {
+	color: #000000; 
+	font-size: 24px; 
+	font-weight: bold; 
+	margin: 0px 0px 6px 0px; 
+	padding: 0px 0px 6px 0px;
+	line-height: normal;
+}
+
+h2 {
+	color: #000000; 
+	font-size: 16px; 
+	font-weight: bold; 
+	margin: 8px 0px 0px 0px; 
+	padding: 8px 0px 0px 0px;
+	line-height: normal;
+}
+
+.address {
+	font-size: 22px;
+	font-weight: normal;
+	line-height: 27px;
+	color: #999999;
+	float: left;
+	padding-top: 17px;
+}
+
+.logo {
+	float: right;
+}
+
+.left {
+	float: left;
+	width: 260px;
+}
+
+.right {
+	float: left;
+	width: 260px;
+}
+
+
+.clear {
+	clear: both;
+}
+
+strong {
+	color: #000000;
+}
+
+.total {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+
+/*--Links--*/
+a:link, a:visited, a:active {
+	color: #002e50; 
+	text-decoration: none; 
+	font-weight: bold;
+}
+
+a:hover {
+	color: #000000; 
+	text-decoration: underline; 
+	font-weight: bold;
+}
+
+
+/*--Table--*/
+table, tr, td {
+	font-family: Arial, Tahoma, sans-serif; 
+	font-size: 12px;
+}
+
+table {
+	border-collapse: collapse; 
+	margin: 10px 35px 10px 0px;	
+}
+
+td {
+	text-align: left; 
+	padding: 8px 10px 8px 10px; 
+	border: 1px solid #ededed;
+}
+
+th {
+	font-weight: bold; 
+	text-align: left; 
+	padding: 8px 10px 8px 10px; 
+	border: 1px solid #ededed;
+	background-color: #ededed;
+	color: #000000;
+}

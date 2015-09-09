@@ -1,0 +1,13 @@
+
+  <% if current_basket %>  
+
+      <h2>Your Basket</h2>
+      <p class="clear">
+        Items: <%= @current_basket.basket_items.length %><br />
+        Total: <strong><%= number_to_pounds @current_basket.total %></strong> <br /> 
+        <%= link_to "View your Basket &amp; Checkout", basket_path %>    
+      </p>
+    
+  <% end %>  
+  
+

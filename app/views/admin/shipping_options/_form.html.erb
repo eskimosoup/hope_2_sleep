@@ -1,0 +1,25 @@
+<% form_for [:admin, @shipping_option] do |f| %>
+  <%= f.error_messages %>
+  
+  <p>
+    <%= f.label :region %><br />
+    <%= f.select :region, options_for_select(Shipping.regions, f.object.region) %>
+  </p>
+
+  <p>
+    <%= f.label :price, "Price (&pound;)" %><br />
+    <%= f.text_field :price %>
+  </p>
+  
+  <p>
+    <%= f.label :min_weight, "Min weight (grams)"  %><br />
+    <%= f.text_field :min_weight %>
+  </p>
+  
+  <p>
+    <%= f.label :max_weight, "Max weight (grams)"  %><br />
+    <%= f.text_field :max_weight %>
+  </p>
+
+  <p><%= f.submit "Submit" %></p>
+<% end %>

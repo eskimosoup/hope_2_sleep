@@ -1,0 +1,24 @@
+<%= render "checkout_navigation" %>
+<% hide_right %>
+<% hide_left %>
+<h1><%= title "Gift Service" %></h1>
+
+<% form_for @current_basket, :url => set_gift_wrap_basket_path(@current_basket) do |f| %>
+
+<%= f.error_messages :id => "flash_error", :header_message => nil %>
+
+<p>
+  <label>Please gift-wrap my order</label>
+  <%= f.check_box :gift_wrap %>
+</p>
+
+<p>
+  <%= f.label :gift_wrap_message, "Message" %><br />
+  <%= f.text_area :gift_wrap_message %>
+</p>
+
+<p>
+<%= f.submit "Continue" %>
+</p>
+
+<% end %>

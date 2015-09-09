@@ -1,0 +1,40 @@
+<% title "Orders" %>
+
+<% form_for @search do |f| %>
+  <p>
+    <%= f.label :delivery_first_names_or_delivery_surname_or_billing_first_names_or_billing_surname_like, "Search" %>
+    <%= f.text_field :delivery_first_names_or_delivery_surname_or_billing_first_names_or_billing_surname_like %>
+  </p>
+  <p>
+    <%= f.label :status_like, "Status" %>
+    <%= f.select :status_like, options_for_select([["All", nil],["Paid", "paid"],["Shipped", "shipped"],["Cancelled", "cancelled"]], params[:search][:status_like]) %>
+  </p>
+  
+  <% if defined?(@dates) %>
+  <p>
+    <%= f.label :created_in %>
+    <%= f.select :created_in, options_for_select(@dates, params[:search][:created_in]) %>
+  </p>
+  <% end %>
+  
+  <p>
+    <%= f.submit "Search" %>
+  </p>
+<% end %>
+
+<%= admin_table({:columns => [
+  "online_invoice_number",
+  ["Status", lambda{|x| x.status.titleize if x.status}, "status"],
+  ["Order Places At", lambda{|x| simple_datetime_format x.created_at }, "created_at"],
+  "billing_first_names",  
+  "billing_surname", 
+  ["Total", lambda{|x| number_to_pounds x.total}, "total"], 
+  ["Items", lambda{|x| x.order_items.length}, nil], 
+  ["View Invoice", lambda{|x| link_to "View Invoice", invoice_admin_order_path(x)}, nil]
+  ], :list => @orders, :delete_action => nil, :highlight => lambda{|x| x.status && x.status.include?("Paid")}}) %>
+  
+<% if defined?(@total) %>
+  <p>
+    Total: <%= number_to_pounds @total %>
+  </p>
+<% end %>

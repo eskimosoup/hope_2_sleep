@@ -1,0 +1,19 @@
+<% if products.length > 0 %>
+
+  <div class="similar_products">
+  
+  <hr />
+	<h2>Similar Products</h2>
+  
+  <br />
+  <% for product in products.sort_by{rand}[0..4] %>
+    
+    <% if product.product_images.length > 0 %>
+      <%= link_to image_tag(product.product_images.first.url(:index), :alt => product.name), product, :title => product.name %>
+    <% end %>
+    
+  <% end %>
+  
+  </div>
+
+<% end %>

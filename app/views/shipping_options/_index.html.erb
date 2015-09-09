@@ -1,0 +1,6 @@
+<% if @shipping_options.length > 1 %>
+  <%= label_tag "basket[shipping_option_id]", "Delivery" %> <%= select_tag "basket[shipping_option_id]", options_from_collection_for_select(@shipping_options, :id, :summary, @current_basket.delivery_summary) %>
+<% else %>
+  <%= label_tag "basket[shipping_option_id]", "Delivery" %> <%= @shipping_options.first.summary %>
+  <%= hidden_field_tag "basket[shipping_option_id]", @shipping_options.first.id %>
+<% end %>

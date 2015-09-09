@@ -1,0 +1,20 @@
+<% hide_right %>
+<% hide_left %>
+
+<h1 style="float: left;"><%= title "Shipping Details" %></h1>
+<%= render "checkout_navigation" %>
+<div class="clear"></div>
+
+<% form_for @current_basket, :url => {:action => "set_delivery"} do |f| %>
+
+<%= f.error_messages :id => "flash_error", :header_message => nil %>
+
+<p id="shipping_options">
+  <%= render "shipping_options/index" %>
+</p>
+
+<p>
+<%= f.submit "Continue" %>
+</p>
+
+<% end %>

@@ -1,0 +1,15 @@
+<% title "Articles" %>
+
+<p><%= link_to "New Article", new_admin_article_path %></p>
+ 
+<% form_for @search do |f| %>
+  <p>
+    <%= f.text_field :headline_or_summary_or_main_content_like %>
+    <%= f.submit "Search" %>
+  </p>
+<% end %>
+
+<%= admin_table({:columns => [
+  "headline", 
+  ["Summary", lambda{|x| (x.summary.length > 50) ? "#{x.summary[0..50]}..." : x.summary}, "summary"], 
+  "date"], :list => @articles, :images => true}) %>

@@ -1,0 +1,41 @@
+<fieldset>
+	
+	<legend>Content</legend>
+	
+	<p>
+	  <%= f.label :title %><br />
+	  <%= f.text_field :title %>
+	</p>
+	
+	<p>
+	  <%= f.label :main_content %><br />
+	  <%= f.advanced_text_area :main_content %>
+	</p>
+	
+	<p>
+	  <%= f.label :product_id, "Product of the Month" %><br />
+	  <%= f.collection_select :product_id, Product.unrecycled, :id, :name, :include_blank => "No Product of the Month" %>
+	</p>
+	
+	<p>
+	  <%= f.label :new_product_id, "New Product" %><br />
+	  <%= f.collection_select :new_product_id, Product.unrecycled, :id, :name, :include_blank => "No new Product" %>
+	</p>
+	
+</fieldset>
+
+<fieldset>
+	
+	<legend>Additional Information</legend>
+	
+	<p>
+	  <%= f.label :meta_description %><br />
+	  <%= f.text_area :meta_description %>
+	</p>
+	
+	<p>
+	  <%= f.label :meta_tags %><br />
+	  <%= f.text_area :meta_tags %>
+	</p>
+	
+</fieldset>

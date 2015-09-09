@@ -1,0 +1,8 @@
+<% default = "" %>
+<% default = @user_name if defined?(@user_name) %>
+<% default = @review.name if defined?(@review) && @review.name? %>
+
+<p>
+  <%= label_tag "review[name]", "Name" %><br />
+  <%= text_field_tag "review[name]", default %>
+</p>

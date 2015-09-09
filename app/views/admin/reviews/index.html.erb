@@ -1,0 +1,15 @@
+<% title "Reviews" %>
+
+<p><%= link_to "New Review", new_admin_review_path %></p>
+
+<% form_for @search do |f| %>
+  <p>
+    <%= f.text_field :review_like %>
+    <%= f.submit "Search" %>
+  </p>
+<% end %>
+
+<%= admin_table({:columns => ["product_id", "name", 
+  ["Review", lambda{|x| (x.review.length > 100) ? "#{x.review[0..100]}..." : x.review}, "review"],
+  ["Checked", lambda{|x|x.checked ? "Yes" : "No"}, "checked"]
+  ], :list => @reviews, :highlight => lambda{|x| (!x.checked) ? x : nil}}) %>

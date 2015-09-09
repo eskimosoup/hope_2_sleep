@@ -1,0 +1,38 @@
+<div class="user_navigation">
+<% if current_user %>
+<p>
+  <%= link_to "Orders", users_path %> <span>|</span> 
+  <%= link_to "Edit profile", edit_user_path(:current) %> <span>|</span>  
+  <%= link_to "Logout", user_logout_path %>
+</p>
+<p>
+<!-- Begin OCC code for Support department -->
+<span class="occIcon-24478-51239-1">&nbsp;</span>
+<script type="text/javascript">
+(function() {
+var occ = document.createElement('script'); occ.type = 'text/javascript'; occ.async = true;
+occ.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'www.onlinechatcenters.com/code-24478-51239-1.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(occ, s);
+})();
+</script>
+<!-- End OCC code -->
+</p>
+<% else %>
+<p>  
+  <%= link_to "Register", new_user_path %> <span>|</span>
+  <%= link_to "Log in", user_login_path %>
+</p>
+<p>
+<!-- Begin OCC code for Support department -->
+<span class="occIcon-24478-51239-1">&nbsp;</span>
+<script type="text/javascript">
+(function() {
+var occ = document.createElement('script'); occ.type = 'text/javascript'; occ.async = true;
+occ.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'www.onlinechatcenters.com/code-24478-51239-1.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(occ, s);
+})();
+</script>
+<!-- End OCC code -->
+</p>
+<% end %>
+</div>

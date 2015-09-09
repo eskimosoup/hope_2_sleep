@@ -1,0 +1,93 @@
+<%= stylesheet_link_tag "invoice.css" %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/invoice.css" media="print" />
+
+<div class="maincontainer">
+
+<%= image_tag "admin/logo_invoice.gif", :alt => "Hope 2 Sleep", :border => "0", :hspace => "0", :vspace => "0", :class => "logo" %>
+
+<div class="address">
+  Hope 2 Sleep<br />
+  768 Holderness Road<br />
+  HULL<br />
+  HU9 3JR<br />
+  <br />
+  0800 002 9711
+</div>
+
+<hr class="clear" />
+
+	<h1>Online Invoice: <%= @order.online_invoice_number %></h1>
+  <p>
+    <strong>Order Date</strong>: <%= simple_date_format @order.created_at %><br />
+    <strong>Payment Method</strong>: <%= @order.status.titleize %>
+  </p>
+  
+<hr />
+
+<div class="left">
+  <h2>Sold To</h2>
+  <p>
+    <%= @order.billing_name %><br />
+    <%= @order.billing_address_1 %><br />
+    <%= @order.billing_address_2 %><br />
+    <%= @order.billing_city %><br />
+    <% unless @order.billing_county.blank? %>
+      <%= @order.billing_county %><br />
+    <% end %>
+    <%= @order.billing_postcode %><br />
+    <%= @order.billing_country %><br />
+    <br />
+    <% if @order.user.phone? && !@order.user.phone.blank? %>
+      <%= @order.user.phone %><br />
+    <% end %>
+    <%= @order.user.email %>
+  </p>
+</div>
+
+<div class="right">
+  <h2>Ship To</h2>
+  <p>
+    <%= @order.delivery_name %><br />
+    <%= @order.delivery_address_1 %><br />
+    <%= @order.delivery_address_2 %><br />
+    <%= @order.delivery_city %><br />
+    <% unless @order.delivery_county.blank? %>
+      <%= @order.delivery_county %><br />
+    <% end %>
+    <%= @order.delivery_postcode %><br />
+    <%= @order.delivery_country %>
+  </p>
+</div>
+
+<hr />
+
+  <h2>Order Details</h2>
+  <table>
+  
+  <tr>
+    <th>Amount</th><th>Products</th><th>Total</th>
+  </tr>
+  
+  <% for item in @order.order_items %>
+    <tr>
+      <td><%= item.amount %></td>
+      <td><%= item.product_name %></td>
+      <td><%= number_to_pounds item.subtotal %></td>
+    </tr>
+  <% end %>
+  
+  <tr><td colspan="2"><div align="right">Sub-total:</div></td>
+    <td><%= number_to_pounds @order.products_subtotal %></td>
+  </tr>
+  <tr><td colspan="2"><div align="right">Delivery: </div></td>
+    <td><%= number_to_pounds @order.delivery_subtotal %></td>
+  </tr>
+  <tr><td colspan="2"><div align="right" class="total">Total:</div></td>
+    <td><span class="total"><%= number_to_pounds @order.total %></span></td>
+  </tr>
+  </table>
+
+
+</div>
+
+</div>

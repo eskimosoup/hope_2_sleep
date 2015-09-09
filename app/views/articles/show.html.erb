@@ -1,0 +1,31 @@
+<% hide_left %>
+<% title "News" %>
+
+  <h1><%=h @article.headline %></h1>
+
+  <span class="date"><%=h simple_date_format @article.date %></span><br />
+
+
+<% if @article.image? %>
+    <%= image_tag @article.image.url(:show), :class=>"image_left" %>
+<% end %>
+
+<%= @article.main_content %>
+  
+<p>
+  <%= @article.tag_list.collect{|x| link_to(x.to_s, articles_path(:tag => x.to_s)) }.join(' | ') %>
+</p>
+
+<hr />
+
+<p align="right">
+  <%= link_to "View all news stories", articles_path %>
+</p>
+
+<% hide_news %>
+<% content_for :right do  %>
+  <div class="news_right">
+		<%= render :partial => "dates" %>
+    <%= render :partial => "tags" %>    
+  </div>
+<% end %>

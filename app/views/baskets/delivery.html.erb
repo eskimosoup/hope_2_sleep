@@ -1,0 +1,131 @@
+<%= javascript_include_tag :defaults %>
+<% hide_right %>
+<% hide_left %>
+<h1 style="float: left;"><%= title "Delivery Details" %></h1>
+<%= render "checkout_navigation" %>
+<div class="clear"></div>
+
+
+<% form_for @current_basket, :url => set_delivery_basket_path(@current_basket) do |f| %>
+
+<%= f.error_messages :id => "flash_error", :header_message => nil %>
+
+
+  <fieldset>
+  
+  <legend>Billing Address</legend>
+  
+  <p>
+    <%= label_tag :billing_address, "Previous Addresses" %><br />
+    <%= select_tag :billing_address, "<option value="">Enter A New Address</option>" + options_from_collection_for_select(@addresses, :id, :select_name) %>
+    <%= observe_field "billing_address", :url => {:action => "change_billing_address"}, :with => "address_id" %>
+  </p>
+  
+  <p>
+  <%= f.label :billing_first_names, "First names" %><br />
+  <%= f.text_field :billing_first_names %>
+  </p>
+  
+  <p>
+  <%= f.label :billing_surname, "Surname" %><br />
+  <%= f.text_field :billing_surname %>
+  </p>
+  
+  <p>
+  <%= f.label :billing_address_1, "Address Line 1" %><br />
+  <%= f.text_field :billing_address_1 %>
+  </p>
+  
+  <p>
+  <%= f.label :billing_address_2, "Address Line 2" %><br />
+  <%= f.text_field :billing_address_2 %>
+  </p>
+  
+  <p>
+  <%= f.label :billing_city, "City" %><br />
+  <%= f.text_field :billing_city %>
+  </p>
+  
+  <p>
+  <%= f.label :billing_county, "County / State" %><br />
+  <%= f.text_field :billing_county %>
+  </p>
+  
+  <p>
+  <%= f.label :billing_postcode, "Postcode / ZIP Code" %><br />
+  <%= f.text_field :billing_postcode, :class=>"med" %>
+  </p>
+  
+  <p>
+  <%= f.label :billing_country, "Country" %><br />
+  <%= f.select :billing_country, grouped_options_for_select(Shipping.grouped_countries, f.object.billing_country) %>
+  </p>
+  
+  </fieldset> 
+
+  <fieldset>
+
+  <legend>Delivery Address [ <%= link_to_function "Use Billing Address", "useBillingAddress()" %> ]</legend>
+  
+  <p>
+    <%= label_tag :delivery_address, "Previous Addresses" %><br />
+    <%= select_tag :delivery_address, "<option value="">Enter A New Address</option>" + options_from_collection_for_select(@addresses, :id, :select_name) %>
+    <%= observe_field "delivery_address", :url => {:action => "change_delivery_address"}, :with => "address_id" %>
+  </p>
+  
+  <p>
+  <%= f.label :delivery_first_names, "First names" %><br />
+  <%= f.text_field :delivery_first_names %>
+  </p>
+  
+  <p>
+  <%= f.label :delivery_surname, "Surname" %><br />
+  <%= f.text_field :delivery_surname %>
+  </p>
+  
+  <p>
+  <%= f.label :delivery_address_1, "Address Line 1" %><br />
+  <%= f.text_field :delivery_address_1 %>
+  </p>
+  
+  <p>
+  <%= f.label :delivery_address_2, "Address Line 2" %><br />
+  <%= f.text_field :delivery_address_2 %>
+  </p>
+  
+  <p>
+  <%= f.label :delivery_city, "City" %><br />
+  <%= f.text_field :delivery_city %>
+  </p>
+  
+  <p>
+  <%= f.label :delivery_county, "County / State" %><br />
+  <%= f.text_field :delivery_county %>
+  </p>
+  
+  <p>
+  <%= f.label :delivery_postcode, "Postcode / ZIP Code" %><br />
+  <%= f.text_field :delivery_postcode, :class=>"med" %>
+  </p>
+  
+  <p>
+  <%= f.label :delivery_country, "Country" %><br />
+  <%= f.select :delivery_country, grouped_options_for_select(Shipping.grouped_countries, f.object.delivery_country) %>
+  </p>
+  
+  <p>
+  <%= observe_field "basket_delivery_country", :url => shipping_options_path(:weight => @current_basket.weight), :with => "country" %>
+  </p>
+  
+  
+  </fieldset>
+
+
+<p class="clear" id="shipping_options">
+<%= render "shipping_options/index" %>
+</p>
+<p>
+<%= f.submit "Continue" %>
+</p>
+
+<% end %>

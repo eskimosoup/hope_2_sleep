@@ -1,0 +1,45 @@
+<% hide_right %>
+<% hide_left %>
+
+<script language="Javascript">
+  
+  function checkTermsAndConditions()
+  {
+    if (document.getElementById('terms_and_conditions').checked == true)
+    {
+      document.getElementById('paypal_checkout_button').disabled = false;
+      //document.getElementById('google_checkout_button').disabled = false;
+      document.getElementById('paymentsense_checkout_button').disabled = false;
+    }
+    else
+    {
+      document.getElementById('paypal_checkout_button').disabled = true;
+      //document.getElementById('google_checkout_button').disabled = true;
+      document.getElementById('paymentsense_checkout_button').disabled = true;
+    }
+  }
+
+</script>
+
+<h1 style="float: left;"><%= title "Payment Options" %></h1>
+<%= render "checkout_navigation" %>
+<div class="clear"></div>
+
+<%= render "basket_table", :locked => true %>
+
+<% unless @current_basket.orderable? %>
+
+  <p>
+    Sorry, it looks like one of the items you wish to order has gone out of stock while you were checking out.  Please remove this item or reduce the amount you are ordering to continue.  Sorry for any inconvenience.<br />
+    <% for basket_item in @current_basket.basket_items %>
+      <% if !basket_item.orderable? %>
+        <strong><%= basket_item.product_name_variation %> stock Level too low.</strong><br />
+      <% end %>
+    <% end %>
+  </p>
+
+<% end %>
+
+<script type="text/javascript">
+  checkTermsAndConditions();
+</script>

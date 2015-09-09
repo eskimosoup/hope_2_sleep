@@ -1,0 +1,22 @@
+<div class="links">
+
+  Find us on: <br />
+  
+  <% if SiteSetting.like("Facebook").first %>
+    <%= link_to image_tag("fb_lg.gif", :alt => "share on facebook"), SiteSetting.like("Facebook").first.value, :title => "share on facebook" %>
+  <% end %>
+  
+  <% if SiteSetting.like("Twitter").first %>
+    <%= link_to image_tag("tw_lg.gif", :alt => "share on twitter"), SiteSetting.like("Twitter").first.value, :title => "share on twitter" %>
+  <% end %>
+  
+  <% if SiteSetting.like("Linked In").first %>
+    <%= link_to image_tag("li_lg.gif", :alt => "share on linked in"), SiteSetting.like("Linked In").first.value, :title => "share on linked in" %>
+  <% end %>
+</div>
+<p class="clear" align="center"><a href="http://www.hope2sleepguide.co.uk" target="_blank"><%= image_tag "forum_button.jpg", :alt=>"Hope 2 Sleep Guide" %></a></p>
+<p>
+	<!-- // MAILCHIMP SUBSCRIBE CODE \\ -->
+		<a href="http://eepurl.com/f2OrL">Subscribe to our newsletter</a>
+	<!-- \\ MAILCHIMP SUBSCRIBE LINK // -->
+</p>

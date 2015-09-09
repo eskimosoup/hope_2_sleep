@@ -1,0 +1,28 @@
+<% title "Stock" %>
+
+<p>
+  <%= link_to "Back to Products", admin_products_path %>
+   | 
+  <%= link_to "New Stock", new_admin_variation_path(:product_id => params[:product_id]) %>
+   | 
+  <%= link_to "Sort", :search => {:smart_order => true}, :product_id => @product.id %>
+</p>
+
+<% if @variations.length < 1 %>
+  <div id="flash_error">Ensure that you have at least one varitation of the product in order to track stock.</div>
+<% end %>
+  
+
+<% columns = [] %>
+<% columns << [@product.option_1_name, lambda{|x| x.option_1}, "option_1"] if @product.option_1_name? %>
+<% columns << [@product.option_2_name, lambda{|x| x.option_2}, "option_2"] if @product.option_2_name? %>
+<% columns << [@product.option_3_name, lambda{|x| x.option_3}, "option_3"] if @product.option_3_name? %>
+<% columns << ["Stock", lambda{|x| text_field_tag "stock[#{x.id}]", x.stock }, "stock"] %>
+
+<% form_tag :action => "update_stock", :product_id => @product.id do %>
+
+<%= admin_table({:columns => columns, :list => @variations}) %>
+
+<%= submit_tag "Update Stock" %>
+
+<% end %>

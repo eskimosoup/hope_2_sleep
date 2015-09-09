@@ -1,0 +1,87 @@
+/*--Main--*/
+body {
+	font-family: Arial, Tahoma, sans-serif; 
+	font-size: 15px;
+	color: #333333; 
+	background-color: #FFFFFF; 
+	
+}
+
+
+p {
+	margin: 0px; 
+	padding: 8px 0px 8px 0px;
+}
+
+
+hr {
+	border: 0px; 
+	border-bottom: 2px dotted #002e50; 
+	height: 0px; 
+	clear: left; 
+	margin: 0px 0px 10px 0px; 
+	padding: 10px 0px 0px 0px;
+}
+
+
+/*--Links--*/
+a:link, a:visited, a:active {
+	color: #002e50; 
+	text-decoration: none; 
+	font-weight: bold;
+}
+
+a:hover {
+	color: #000000; 
+	text-decoration: underline; 
+	font-weight: bold;
+}
+
+/*--Titles--*/
+h1 {
+	color: #252525; 
+	font-size: 26px; 
+	font-weight: bold; 
+	margin: 0px 0px 6px 0px; 
+	padding: 0px 0px 6px 0px;
+	line-height: normal;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-style: italic;
+}
+
+h2 {
+	color: #002e50; 
+	font-size: 18px; 
+	font-weight: bold; 
+	margin: 12px 0px 0px 0px; 
+	padding: 12px 0px 0px 0px;
+	line-height: normal;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-style: italic;
+}
+
+h3 {
+	color: #002e50; 
+	font-size: 16px; 
+	font-weight: bold; 
+	margin: 8px 0px 0px 0px; 
+	padding: 8px 0px 0px 0px;
+	line-height: normal;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-style: italic;
+}
+
+
+/*--Styles--*/
+.image_right {
+	float: right; 
+	margin: 12px 0px 5px 15px;
+	border: 2px solid #002e50;
+}
+
+.image_left {
+	float: left; 
+	margin: 12px 15px 5px 0px;
+	border: 2px solid #002e50;
+}
+

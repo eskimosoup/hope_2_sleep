@@ -1,0 +1,195 @@
+<% hide_left %>
+<% hide_flash %>
+
+<script language="Javascript" type="text/javascript">
+  function showImage(elementId)
+  {
+    <% for image in @product.product_images %>
+    document.getElementById('<%= image.name.to_s %>').style.display = "none";
+    <% end %>
+    document.getElementById(elementId).style.display = "";
+  }
+  
+  var smallImages = new Array(<%= @product.product_images.length %>);
+  <% count = 0 %>
+  <% for image in @product.product_images %>
+  smallImages[<%= count %>] = '<%= image.name.to_s %>_small';
+  <% count += 1 %>
+  <% end %>
+  var current = 2;
+  
+  function rightArrow()
+  {
+    if (smallImages.length > current && current != (smallImages.length-1))
+    {
+      document.getElementById(smallImages[current-2]).style.display = "none";
+      document.getElementById(smallImages[current+1]).style.display = "";
+      document.getElementById("leftArrow").className = "active_left";
+      current++;
+      if (current == (smallImages.length-1))
+      {
+        document.getElementById("rightArrow").className = "disabled_right";
+      }
+    }    
+  }
+  
+  function leftArrow()
+  {
+    if (current != 2)
+    {
+      document.getElementById(smallImages[current]).style.display = "none";
+      document.getElementById(smallImages[current-3]).style.display = "";
+      document.getElementById("rightArrow").className = "active_right";
+      current--;
+      if (current == 2)
+      {
+        document.getElementById("leftArrow").className = "disabled_left";
+      }
+    }
+  }
+</script>
+
+
+<div class="product_show_left">
+	
+	<!-- MAIN IMAGE -->
+	<% for image in @product.product_images %>
+  <div class="show_large_image">
+    <%= link_to(image_tag(image.url(:highlight)), image.url(:original), :rel => "lytebox[gallery]", :id => image.name.to_s, :style => "display:#{(image == @product.product_images.first) ? "":"none"}", :title => link_to("See Full Size Image", image.url(:original))) %>
+  </div>  
+  <% end %>
+  
+  <% if @product.product_images.length > 1 %>
+      
+  <!-- LEFT ARROW -->
+  <%= link_to_function "<", "leftArrow()", :id => "leftArrow", :class => "disabled_left" %>
+  
+  <!-- SMALL IMAGES -->
+  <% for image in @product.product_images %>
+  <div class="show_small_image">
+    <% display = @product.product_images[0..2].include?(image) %>
+    <%= link_to_function(image_tag(image.url(:index), :width => 80, :height => 80), "showImage('#{image.name.to_s}')", :id => "#{image.name.to_s}_small", :style => "display:#{display ? "":"none"}") %>
+  </div>
+  <% end %>
+  
+  <!-- RIGHT ARROW -->
+  <%= link_to_function ">", "rightArrow()", :id => "rightArrow", :class => (@product.product_images.length > 2) ? "active_right" : "disabled_right" %>
+  
+  <% end %>
+
+<hr/>
+<h2>Reviews</h2>
+<% count = 2 %>
+<p><%= link_to "Add a review for this product here.", desire_new_reviews_path(:product_id => @product.id) %></p>
+
+<% for review in Review.active.product_id_equals(@product.id).find(:all, :order => "RAND()", :limit => count) %>
+  <div class="reviews">
+    <%= review.review %>
+    <% if review.name? %>
+      <span><%= review.name %></span>
+    <% end %>
+  </div>
+<% end %>
+
+<% if Review.active.product_id_equals(@product.id).length > count %>
+  <%= link_to "Show All Reviews for this Product", reviews_product_path(@product) %>
+<% end %>
+
+<% if @product.youtube_link? && @product.youtube_video_code %>
+<hr/>
+<h2>Related Video</h2>
+<br />
+<div class="video">
+  <object width="285" height="185"><param name="movie" value="http://www.youtube.com/v/<%= @product.youtube_video_code %>?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/<%= @product.youtube_video_code %>?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="285" height="185"></embed></object>
+</div>
+<% end %>
+
+</div>
+
+
+<div class="product_show_right">
+	<h1>
+		<%= title h(@product.name) %>
+		<span><%= number_to_pounds @product.price %></span>
+  </h1>
+
+  <%= @product.summary %>
+  
+  <%- flash.each do |name, msg| -%>
+		<%= content_tag :div, msg, :id => "flash_#{name}" %>
+	<%- end -%>
+  
+  <a id="form"></a>
+  <div id="js_form">
+  
+    <% form_tag add_to_baskets_path do %>
+    
+    <%= hidden_field_tag :product_id, @product.id %>
+    
+    <% if @product.option_1s.length > 0 && @product.option_1_name? %>
+      <p>
+        <%= select_tag :option_1, options_for_select(@option_1s, @option_1) %>
+        <%= observe_field "option_1", :url => get_option_2s_product_path(@product), :with => "option_1" %>
+      </p>
+    <% end %>
+  
+    <div id="option_2s_js">
+      <%= render "option_2s_js" %>
+    </div>
+  
+    <div id="option_3s_js">
+      <%= render "option_3s_js" %>
+    </div>
+    
+    <p>
+      <%= submit_tag "Add to Basket" %>
+    </p>
+    
+    <% end %>
+  </div>
+  
+  
+  <div id="no_js_form">
+  
+    <% form_tag add_to_baskets_path do %>
+  
+      <%= hidden_field_tag :product_id, @product.id %>
+  
+      <p>
+      <% if @product.option_1_name? %>
+        <% if defined?(@option_1s) && !defined?(@option_1) %>
+          <%= select_tag :option_1, options_for_select(@option_1s, @option_1) %>
+          <% if @product.option_2_name? %>
+            <%= submit_tag "Select #{@product.option_1_name}" %>
+          <% else %>
+            <%= submit_tag "Add to Basket" %>
+          <% end %>
+        <% else %>
+          <%= select_tag :option_1, "<option value=''>#{@option_1}</option>", :disabled => true %>
+          <%= submit_tag "Reset #{@product.option_1_name}" %>
+        <% end %>
+        </p>
+      
+      <% else %>
+        <%= submit_tag "Add to Basket" %>
+      <% end %>
+      </p>
+      
+    <% end %>
+  
+    <div id="option_2s">
+      <%= render "option_2s" %>
+    </div>
+  
+    <div id="option_3s">
+      <%= render "option_3s" %>
+    </div>
+  
+  </div>
+  
+  <p align="right">
+    <%= link_to "View all products", products_path %>
+  </p>
+
+</div>
+<%= render "products/associated", :products => @product.associated_products %>

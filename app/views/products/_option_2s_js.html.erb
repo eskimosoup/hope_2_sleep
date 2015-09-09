@@ -1,0 +1,10 @@
+<% if @product.option_2_name? %>
+  <p>
+    <% if defined? @option_2s %>
+      <%= select_tag :option_2, @option_2s %>
+    <% else %>
+      <%= select_tag :option_2, "<option>#{@product.option_2_name.pluralize}</option>", :disabled => true %>
+    <% end %>
+    <%= observe_field "option_2", :url => get_option_3s_product_path(@product, :option_1 => params[:option_1]), :with => "option_2" %>
+  </p>
+<% end %>

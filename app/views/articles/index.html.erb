@@ -1,0 +1,22 @@
+<% hide_left %>
+<h1><%= title @title %></h1>
+
+<% if @articles.length > 0 %>
+
+  <% for article in @articles %>
+    <%= render "articles/article", :article => article %>
+  <% end %>
+  
+  <%= will_paginate @articles %>
+  
+<% else %>
+ <p>No news stories to display.</p>
+<% end %>
+
+<% hide_news %>
+<% content_for :right do  %>
+  <div class="news_right">
+    <%= render :partial => "dates" %>
+		<%= render :partial => "tags" %>
+  </div>
+<% end %>

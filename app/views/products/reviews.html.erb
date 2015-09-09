@@ -1,0 +1,17 @@
+<% hide_left %>
+
+<h1><%= title "#{@product.name} Reviews" %></h1>
+
+<p>
+  <%= link_to "Back to Product", @product %>
+</p>
+
+<% for review in @reviews %>
+  <div class="reviews">
+    <%= review.review %>
+    <% if review.name? %>
+      <span><%= review.name %></span>
+    <% end %>
+  </div>
+<% end %>
+

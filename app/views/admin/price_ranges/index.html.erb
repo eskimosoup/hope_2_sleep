@@ -1,0 +1,17 @@
+<% title "Price Ranges" %>
+
+
+<p><%= link_to "New Price Range", new_admin_price_range_path %></p>
+
+ 
+<% form_for @search do |f| %>
+  <p>
+    <%= f.text_field :start_or_end_like %>
+    <%= f.submit "Search" %>
+  </p>
+<% end %>
+
+<%= admin_table({:columns => [
+  ["Start", lambda{|x| number_to_pounds x.start}, "start"], 
+  ["End", lambda{|x| number_to_pounds x.end }, "end"]
+  ], :list => @price_ranges}, "admin/shared/admin_table_sort") %>

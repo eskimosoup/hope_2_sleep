@@ -1,0 +1,20 @@
+<% hide_right %>
+<% hide_left %>
+<h1 style="float: left;"><%= title "Your Basket" %></h1>
+<%= render "checkout_navigation" %>
+<div class="clear"></div>
+
+<%- flash.each do |name, msg| -%>
+	<%= content_tag :div, msg, :id => "flash_#{name}" %>
+<%- end -%>
+
+<% if @current_basket.basket_items.length > 0 %>
+	
+  <%= render "basket_table" %>
+  
+  
+<% else %>
+
+  <p>There are currently no items in your basket.</p>
+  
+<% end %>

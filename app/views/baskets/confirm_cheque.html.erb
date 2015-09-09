@@ -1,0 +1,17 @@
+<% hide_right %>
+<% hide_left %>
+<h1><%= title "Your Order" %></h1>
+
+<% if defined?(@order) %>
+
+  <p class="reference_number">
+    Your Order Reference Number: <%= @order.online_invoice_number %>
+  </p>
+
+  <% if @page_node %>
+    <%= @page_node.active_content.main_content %>
+  <% end %>
+  
+<% else %>
+  <div id="flash_error">This Page Has Expired. Check your <%= link_to "order history", users_path %> to find your Order Reference Number.</div>
+<% end %>

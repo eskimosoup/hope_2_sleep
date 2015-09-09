@@ -1,0 +1,27 @@
+<% metadata(@page_node.active_content.meta_description, @page_node.active_content.meta_tags) %>
+
+<h1><%= title @page_node.title %></h1>	
+
+<%= @page_node.active_content.main_content %>
+
+<div class="products">
+	
+  <% if @page_node.active_content.new_product %>
+		<div style="float: left; width: 285px;">
+			<h2>What's New</h2>
+			<%= render "products/product_highlight", :product => @page_node.active_content.new_product %>
+		</div>
+  <% end %>
+	
+  <% if @page_node.active_content.product %>
+		<div style="float: right; width: 285px;">
+			<h2>Product of the Month</h2>
+			<%= render "products/product_highlight", :product => @page_node.active_content.product %>
+		</div>
+  <% end %>
+	
+</div>
+
+<% content_for :right do %>
+
+<% end %>

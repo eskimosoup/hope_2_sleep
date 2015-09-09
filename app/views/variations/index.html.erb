@@ -1,0 +1,32 @@
+<h1><%= title "Variations" %></h1>
+
+
+
+<% if @variations.length > 0 %>
+
+  <% for variation in @variations %>
+  <p>
+
+      <%=h variation.stock %><br />
+
+      <%=h variation.option_1 %><br />
+
+      <%=h variation.option_2 %><br />
+
+      <%=h variation.option_3 %><br />
+
+      <%=h variation.product_id %><br />
+
+      <%= link_to "Show", variation %><br />
+
+
+  </p>
+  <% end %>
+  
+  <%= will_paginate @variations %>
+  
+<% else %>
+
+  No Variations  to Display
+
+<% end %>

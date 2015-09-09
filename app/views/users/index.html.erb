@@ -1,0 +1,18 @@
+<% hide_left %>
+
+<h1><%= title "Your Orders" %></h1>
+
+<p>
+  Note - if you have recently placed an order it may take several minutes to appear on this page.  We are sorry for the delay.
+</p>
+
+<% if current_user.orders.length > 0 %>
+  <% for order in current_user.orders.sort_by{|x| x.created_at}.reverse %>
+    <div class="order">
+      <%= render "orders/order", :order => order %>
+      <hr />
+    </div>
+  <% end %>
+<% else %>
+  <p>You have yet to place any orders.</p>
+<% end %>

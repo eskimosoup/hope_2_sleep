@@ -1,0 +1,26 @@
+<% hide_left %>
+
+<h1><%= title "Products" %></h1>
+
+<% if @products.length > 0 %>
+
+  <div class="products_list">
+  <% for product in @products %>
+    <%# apply a different style to each 4th product %>
+    <% if ((@products.rindex(product)+1) % 4) == 0 %>
+      <div style="margin-right:0;">
+    <% else %>
+      <div>
+    <% end %>
+      <%= render "products/product", :product => product %>
+    </div>   
+  <% end %>
+  </div>
+  
+  <%= will_paginate @products %>
+  
+<% else %>
+
+  <p>Sorry there are currently no products to display.</p>
+
+<% end %>

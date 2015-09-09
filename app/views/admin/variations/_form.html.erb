@@ -1,0 +1,38 @@
+<% form_for [:admin, @variation] do |f| %>
+  <%= f.error_messages %>
+  
+  <%= f.hidden_field :product_id %>
+
+  <% if @product.option_1_name? %>
+  <p>
+    <%= f.label :option_1, "#{@product.option_1_name} (Option 1)" %><br />
+    <%= f.text_field :option_1 %>
+    <span style="float:right;">
+    <%= quick_fill_tag "variation_option_1", @similar_variations.collect{|x| x.option_1}.uniq.sort, "Other #{@product.option_1_name.pluralize}..." %>
+    </span>
+  </p>
+  <% end %>
+
+  <% if @product.option_2_name? %>
+  <p>
+    <%= f.label :option_2, "#{@product.option_2_name} (Option 2)" %><br />
+    <%= f.text_field :option_2 %>
+    <%= quick_fill_tag "variation_option_2", @similar_variations.collect{|x| x.option_2}.uniq.sort, "Other #{@product.option_2_name.pluralize}..." %>
+  </p>
+  <% end %>
+
+  <% if @product.option_3_name? %>
+  <p>
+    <%= f.label :option_3, "#{@product.option_3_name} (Option 3)" %><br />
+    <%= f.text_field :option_3 %>
+    <%= quick_fill_tag "variation_option_3", @similar_variations.collect{|x| x.option_3}.uniq.sort, "Other #{@product.option_3_name.pluralize}..." %>
+  </p>
+  <% end %>
+  
+  <p>
+    <%= f.label :stock %><br />
+    <%= f.text_field :stock %>
+  </p>
+  
+  <p><%= f.submit "Submit" %></p>
+<% end %>

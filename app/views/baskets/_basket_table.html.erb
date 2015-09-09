@@ -1,0 +1,140 @@
+<% locked ||= false %>
+
+<table cellpadding="0" cellspacing="0" border="0">
+
+<tr><th>Product</th><th>Description</th><th>Price</th><th>Quantity</th>
+<% unless locked %>
+  <th>Remove</th>
+<% end %>
+<th>Subtotal</th> 
+</tr>
+
+<% for basket_item in @current_basket.basket_items %>
+<tr>
+
+  <td valign="top">
+    <% if basket_item.variation.product.image? %>
+      <% image_url = basket_item.variation.product.image.url(:index) %> 
+    <% else %>
+      <% image_url = "no_image.gif" %> 
+    <% end %>
+    <%= link_to image_tag(image_url), basket_item.variation.product %>  </td>
+  
+<td valign="top">
+    <%= link_to basket_item.variation.product_name_variation, basket_item.variation.product, {:class=>"product_name_basket"} %>
+  </td>
+  
+  <td valign="top">
+    <span class="price">
+        <%= number_to_pounds basket_item.variation.product.price %>
+    </span>
+  </td>
+  
+  <td valign="top" nowrap="nowrap">
+    <span class="price" style="float: left; display: inline; margin-right: 8px;"><%= basket_item.amount %></span>
+    <% unless locked %>
+      <%= link_to image_tag('increase.gif'), :action => "increase", :basket_item_id => basket_item.id, :method => :post %>
+      <%= link_to image_tag('decrease.gif'), :action => "decrease", :basket_item_id => basket_item.id, :method => :post %>
+    <% end %>  </td>
+  
+<% unless locked %>
+    <td valign="top">
+      <%= link_to image_tag('remove.gif'), :action => "remove", :basket_item_id => basket_item.id, :method => :post %>
+    </td>
+<% end %>
+  
+  <td valign="top"><span class="price"><%= number_to_pounds basket_item.subtotal %></span></td>
+  
+</tr>
+<% end %>
+
+<% span = locked ? 2 : 3 %>
+
+<tr>
+  <td colspan="<%= span %>"></td>	
+  <td colspan="2" valign="top" align="right"><div align="right">Product Subtotal:</div></td>
+  <td  valign="top"><%= number_to_pounds @current_basket.products_subtotal %></td>
+</tr>
+
+<% if @current_basket.gift_wrap? %>
+<tr>
+  <td colspan="<%= span %>"></td>
+  <td colspan="2" valign="top" align="right"><div align="right">Gift Wrap:</div></td>
+  <td  valign="top"><%= number_to_pounds @current_basket.gift_wrap_subtotal %></td>
+</tr>
+<% end %>
+
+<% if @current_basket.promo_code %>
+<tr>
+  <td colspan="<%= span %>"></td>
+  <td colspan="2" valign="top" align="right"><div align="right"><%= @current_basket.promo_code.name %>:</div></td>
+  <td valign="top">-<%= number_to_pounds @current_basket.discount_subtotal %></td>
+</tr>
+<% end %>
+
+<% if @current_basket.delivery_summary %>
+<tr>
+  <td colspan="<%= span %>"></td>
+  <td colspan="2" valign="top" align="right"><div align="right">Delivery:</div></td>
+  <td valign="top"><%= number_to_pounds @current_basket.delivery_subtotal %></td>
+</tr>
+<% end %>
+
+<tr>
+  <td colspan="<%= span %>"></td>
+  <td  class="price" colspan="2" valign="top" align="right"><div align="right">Order Total:</div></td>
+  <td valign="top" class="price"><%= number_to_pounds @current_basket.total %></td>
+</tr>
+
+<tr>
+  <td colspan="<%= span %>"></td>
+  <td colspan="3" class="checkout">
+  
+  <% if locked %>
+  
+    <% if @current_basket.orderable? %>
+ 
+      <% form_tag @paypal_url do %>
+      
+        <p align="right">
+          <%= check_box_tag :terms_and_conditions, "1", false, :class => "checkbox", :onclick => "checkTermsAndConditions();" %>
+          I accept the <%= link_to "terms and conditions", url_for(PageNode.name_like("Terms and Conditions").first.path), :popup => true %>
+        </p>
+        
+        <p align="right">  
+          <%= submit_tag "Pay with PayPal", :disabled => true, :id => "paypal_checkout_button", :class => "submit" %>
+        </p>
+      <% end %>
+      
+      <%= render "paymentsense_form" %>
+      
+      <% form_tag cheque_baskets_path do %>
+        <p align="right">  
+          <%= submit_tag "Pay via Cheque", :class => "submit" %>
+        </p>
+      <% end %>
+      
+      <%# render "google_checkout_form" %>
+    
+    <% end %> 
+  
+  <% else %>
+	  
+	  <% form_tag({:action => "begin_checkout"})  do %>
+      <p align="right"><%= submit_tag "Checkout", :disabled => (@current_basket.empty? ? true : false), :class => "submit" %></p>
+    <% end %>
+    
+    <% if session[:product_search] %>
+      <% destination = session[:product_search] %>
+    <% else %>
+      <% destination = products_path %>
+    <% end %>
+    
+    
+  <% end %>
+    
+  </td>
+</tr>
+
+</table>
+<p><%= link_to "Continue Shopping", destination, {:class=>"continue_shopping"} %></p>

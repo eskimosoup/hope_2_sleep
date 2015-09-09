@@ -1,0 +1,13 @@
+<% title "Products" %>
+
+<p><%= link_to "New Product", new_admin_product_path %></p>
+
+<%= eskimo_table({:columns => [
+  "name",
+  ["Weight", lambda{|x| "#{x.weight} grams"}, "weight"],
+  ["Price", lambda{|x| number_to_pounds x.price}, "price"],
+  ["Option 1", lambda{|x| x.option_1_name? ? x.option_1_name : "-" }, 'option_1_name'],
+  ["Option 2", lambda{|x| x.option_2_name? ? x.option_2_name : "-" }, 'option_2_name'],
+  ["Option 3", lambda{|x| x.option_3_name? ? x.option_3_name : "-" }, 'option_3_name'],
+  ["", lambda{|x| link_to "Stock", :controller => "admin/variations", :action => "index", :product_id => x.id }, nil]
+  ], :list => @products, :images => true, :manual_sorting => true}) %>

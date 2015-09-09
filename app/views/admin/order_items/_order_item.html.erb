@@ -1,0 +1,23 @@
+<div class="order_item">
+<p>
+
+  Product: 
+  <% if Variation.exists?(order_item.variation_id) %>
+    <%= link_to order_item.variation.product.name, edit_admin_variation_path(order_item.variation) %>
+  <% else %>
+    <%= order_item.product_name %>
+  <% end %>
+
+  <% unless order_item.class == BasketItem %>
+  <br />
+  
+  Amount: 
+  <%= order_item.amount %>
+  
+  <br />
+  
+  <%= number_to_pounds order_item.subtotal %>
+  <% end %>
+  
+</p>
+</div>

@@ -1,0 +1,77 @@
+<% form_for [:admin, @product], :html => {:multipart => true} do |f| %>
+  <%= f.error_messages %>
+
+  <fieldset>
+  <legend>Basic Info</legend>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :summary %><br />
+    <%= f.advanced_text_area :summary %>
+  </p>
+
+  <p>
+    <%= f.label :price, "Price (&pound;)" %><br />
+    <%= f.text_field :price %>
+  </p>
+  
+  <p>
+    <%= f.label :weight, "Weight (grams)" %><br />
+    <%= f.text_field :weight %>
+  </p>
+  </fieldset>
+  
+  <fieldset>
+  <legend>Stock Options</legend>
+  <p>
+    <%= f.label :option_1_name %><br />
+    <%= f.text_field :option_1_name %>
+    <%= quick_fill_tag "product_option_1_name", Product.unrecycled.collect{|x| [x.option_1_name, x.option_2_name, x.option_3_name]}.flatten.uniq.sort.reject{|x| x.blank? }, "Fequently used options..." %>
+  </p>
+
+  <p>
+    <%= f.label :option_2_name %><br />
+    <%= f.text_field :option_2_name %>
+    <%= quick_fill_tag "product_option_2_name", Product.unrecycled.collect{|x| [x.option_1_name, x.option_2_name, x.option_3_name]}.flatten.uniq.sort.reject{|x| x.blank? }, "Fequently used options..." %>
+  </p>
+
+  <p>
+    <%= f.label :option_3_name %><br />
+    <%= f.text_field :option_3_name %>
+    <%= quick_fill_tag "product_option_3_name", Product.unrecycled.collect{|x| [x.option_1_name, x.option_2_name, x.option_3_name]}.flatten.uniq.sort.reject{|x| x.blank? }, "Fequently used options..." %>
+  </p>
+  </fieldset>
+  
+  <fieldset>
+  <legend>Images</legend>
+  <%= image_field_tag f, :product, :image_1 %>
+  <%= image_field_tag f, :product, :image_2 %>
+  <%= image_field_tag f, :product, :image_3 %>
+  <%= image_field_tag f, :product, :image_4 %>
+  </fieldset>
+  
+  <fieldset>
+  <legend>Associated Products</legend>
+  <p>
+    <%= f.collection_select :associated_product_ids, Product.unrecycled.reject{|x| x == f.object}, :id, :name, {}, :multiple => true %>
+  </p>
+  </fieldset>
+  
+  <fieldset>
+  <legend>Video</legend>
+  <p>
+    <%= f.helpful_label :youtube_link, "YouTube Video Link URL", "Copy the link url of the video you would like to embed here" %>
+    <%= f.text_field :youtube_link %>
+  </p>
+  </fieldset>
+  
+  <p>
+    <%= f.label :display %>
+    <%= f.check_box :display %>
+  </p>
+
+  <p><%= f.submit "Submit" %></p>
+<% end %>

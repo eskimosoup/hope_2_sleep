@@ -1,0 +1,12 @@
+<% title "Edit Order" %>
+ 
+<p>
+
+  <%= link_to "View All", admin_orders_path %>
+   | 
+  <%= link_to "View Invoice", invoice_admin_order_path(@order) %>
+
+</p>
+ 
+<%= render :partial => 'form' %>
+

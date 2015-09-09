@@ -1,0 +1,58 @@
+<% form_tag @google_url do %>
+
+  <% count = 0 %>
+      
+  <% @current_basket.basket_items.each do |basket_item| %>
+    <% count += 1 %>
+    <%= hidden_field_tag "item_name_#{count}", basket_item.product_name_variation %>
+    <%= hidden_field_tag "item_description_#{count}", "" %>
+    <%= hidden_field_tag "item_price_#{count}", sprintf('%.2f', basket_item.price_per_product) %>
+    <%= hidden_field_tag "item_currency_#{count}", "GBP" %>
+    <%= hidden_field_tag "item_quantity_#{count}", basket_item.amount %>
+    <%= hidden_field_tag "item_merchant_id_#{count}", @current_basket.id %>
+    <input type="hidden" name="shopping-cart.items.item-#{count}.digital-content.display-disposition" value="OPTIMISTIC" />
+    <input type="hidden" name="shopping-cart.items.item-#{count}.digital-content.description" value="" />
+  <% end %>
+  
+  <% if @current_basket.discount_subtotal > 0 %>
+    <% count += 1 %>
+    <%= hidden_field_tag "item_name_#{count}", "Discount" %>
+    <%= hidden_field_tag "item_description_#{count}", "" %>
+    <%= hidden_field_tag "item_price_#{count}", sprintf('%.2f', @current_basket.discount_subtotal) %>
+    <%= hidden_field_tag "item_currency_#{count}", "GBP" %>
+    <%= hidden_field_tag "item_quantity_#{count}", 1 %>
+    <%= hidden_field_tag "item_merchant_id_#{count}", @current_basket.id %>
+    <input type="hidden" name="shopping-cart.items.item-#{count}.digital-content.display-disposition" value="OPTIMISTIC" />
+    <input type="hidden" name="shopping-cart.items.item-#{count}.digital-content.description" value="" />
+  <% end %>
+
+  <% if @current_basket.gift_wrap? %>
+    <% count += 1 %>
+    <%= hidden_field_tag "item_name_#{count}", "Gift Wrap" %>
+    <%= hidden_field_tag "item_description_#{count}", "" %>
+    <%= hidden_field_tag "item_price_#{count}", sprintf('%.2f', @current_basket.gift_wrap_subtotal) %>
+    <%= hidden_field_tag "item_currency_#{count}", "GBP" %>
+    <%= hidden_field_tag "item_quantity_#{count}", 1 %>
+    <%= hidden_field_tag "item_merchant_id_#{count}", @current_basket.id %>
+    <input type="hidden" name="shopping-cart.items.item-#{count}.digital-content.display-disposition" value="OPTIMISTIC" />
+    <input type="hidden" name="shopping-cart.items.item-#{count}.digital-content.description" value="" />
+  <% end %>
+  
+  <% if @current_basket.delivery_subtotal > 0 %>
+    <% count += 1 %>
+      <%= hidden_field_tag "item_name_#{count}", "Delivery" %>
+    <%= hidden_field_tag "item_description_#{count}", "" %>
+    <%= hidden_field_tag "item_price_#{count}", sprintf('%.2f', @current_basket.delivery_subtotal) %>
+    <%= hidden_field_tag "item_currency_#{count}", "GBP" %>
+    <%= hidden_field_tag "item_quantity_#{count}", 1 %>
+    <%= hidden_field_tag "item_merchant_id_#{count}", @current_basket.id %>
+    <input type="hidden" name="shopping-cart.items.item-#{count}.digital-content.display-disposition" value="OPTIMISTIC" />
+    <input type="hidden" name="shopping-cart.items.item-#{count}.digital-content.description" value="" />
+  <% end %>
+
+  <p align="right">  
+    <%= submit_tag "Pay with Google Checkout", :disabled => true, :id => "google_checkout_button", :class => "submit" %>
+  </p>
+  
+  
+<% end %>

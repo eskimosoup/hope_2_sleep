@@ -1,0 +1,28 @@
+<% if current_user %>
+
+  <p>You are currently logged in as <strong><%= current_user.email %></strong>.  You can <%= link_to "logout by clicking here", user_logout_path %>.
+
+<% else %>
+
+  <% form_for @user_session do |f| %>  
+    <%= f.error_messages %>  
+
+    <p>  
+      <%= f.label :email %> <br /> 
+      <%= f.text_field :email %>  
+    </p>  
+    
+    <p>  
+      <%= f.label :password %> <br /> 
+      <%= f.password_field :password %>  
+    </p>  
+    
+    <p>  
+      <%= f.submit "Submit" %>  
+    </p>  
+    
+    <%= link_to "Forgotten your password?", new_user_password_reset_path %>
+      
+  <% end %>
+
+<% end %>

@@ -1,0 +1,31 @@
+<h3><%= link_to h(article.headline), {:controller => "articles", 
+  :action => "show",
+  :id => article.id,
+  :tag => params[:tag],
+  :year => params[:year],
+  :month => params[:month]}, :class => "headline" %></h3>
+
+<span class="date"><%=h simple_date_format article.date %></span>
+<br />
+<% if article.image? %>
+ <%= link_to image_tag(article.image.url(:index), :class=>"image_left"), {:controller => "articles", 
+  :action => "show",
+  :id => article.id,
+  :tag => params[:tag],
+  :year => params[:year],
+  :month => params[:month]} %>
+<% end %>
+
+<p><%=h article.summary %></p>
+
+<% css_class = defined?(grey) ? "more_grey" : "more" %>
+
+<p align="right"><%= link_to "More", {:controller => "articles",
+  :action => "show",
+  :id => article.id,
+  :tag => params[:tag],
+  :year => params[:year],
+  :month => params[:month]}, 
+  :class => css_class %></p>
+
+<hr />

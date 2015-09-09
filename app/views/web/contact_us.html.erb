@@ -1,0 +1,32 @@
+<% hide_left %>
+<% metadata(@page_node.active_content.meta_description, @page_node.active_content.meta_tags) %>
+
+<h1><%= title @page_node.title %></h1>	
+
+<%= @page_node.active_content.main_content %>
+
+<% form_tag :controller => "web", :action => "deliver_contact_us" do %>
+	<p>
+		<%= label_tag :name %><br />
+		<%= text_field_tag :name, params[:name] %>
+	</p>
+	<p>
+		<%= label_tag :tel %><br />
+		<%= text_field_tag :tel, params[:tel] %>
+	</p>
+	<p>
+		<%= label_tag :email %><br />
+		<%= text_field_tag :email, params[:email] %>
+	</p>
+	<p>
+		<%= label_tag :enquiry %><br />
+		<%= text_area_tag :enquiry, params[:enquiry] %>
+	</p>
+	<p>
+		<%= submit_tag "Submit" %>
+	</p>
+<% end %>
+
+<% content_for :right do %>
+
+<% end %>

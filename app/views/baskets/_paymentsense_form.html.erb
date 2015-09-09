@@ -1,0 +1,41 @@
+<% form_tag "https://mms.paymentsensegateway.com/Pages/PublicPages/PaymentForm.aspx" do %>
+<%# form_tag check_url do %>
+
+  <% time = Time.now.strftime("%Y-%m-%d %H:%M:%S %z").insert(-3, ":") %>
+
+  <%= hidden_field_tag 'HashDigest', @current_basket.paymentsense_hash_digest(time, paymentsense_reply_baskets_url) %>
+  <%= hidden_field_tag 'MerchantID', Basket::MerchantId %>
+  <%= hidden_field_tag 'Amount', @current_basket.total_pence %>
+  <%= hidden_field_tag 'CurrencyCode', Basket::CurrencyCode %>
+  <%= hidden_field_tag 'OrderID', @current_basket.id %>
+  <%= hidden_field_tag 'TransactionType', 'SALE' %>
+  <%= hidden_field_tag 'TransactionDateTime', time %>
+  <%= hidden_field_tag 'CallbackURL', paymentsense_reply_baskets_url %>
+  <%= hidden_field_tag 'OrderDescription', '' %>
+  <%= hidden_field_tag 'CustomerName', '' %>
+  <%= hidden_field_tag 'Address1', '' %>
+  <%= hidden_field_tag 'Address2', '' %>
+  <%= hidden_field_tag 'Address3', '' %>
+  <%= hidden_field_tag 'Address4', '' %>
+  <%= hidden_field_tag 'City', '' %>
+  <%= hidden_field_tag 'State', '' %>
+  <%= hidden_field_tag 'PostCode', '' %>
+  <%= hidden_field_tag 'CountryCode', '' %>
+  <%= hidden_field_tag 'CV2Mandatory', 'false' %>
+  <%= hidden_field_tag 'Address1Mandatory', 'false' %>
+  <%= hidden_field_tag 'CityMandatory', 'false' %>
+  <%= hidden_field_tag 'PostCodeMandatory', 'false' %>
+  <%= hidden_field_tag 'StateMandatory', 'false' %>
+  <%= hidden_field_tag 'CountryMandatory', 'false' %>
+  <%= hidden_field_tag 'ResultDeliveryMethod', 'POST' %>
+  <%= hidden_field_tag 'ServerResultURL', paymentsense_reply_baskets_url %>
+  <%= hidden_field_tag 'PaymentFormDisplaysResult', 'true' %>
+  <%= hidden_field_tag 'ServerResultURLCookieVariables', '' %>
+  <%= hidden_field_tag 'ServerResultURLFormVariables', '' %>
+  <%= hidden_field_tag 'ServerResultURLQueryStringVariables', '' %>
+  
+  <p align="right">
+    <%= submit_tag "Pay with Credit Card", :id => "paymentsense_checkout_button", :disabled => true %>
+  </p>
+
+<% end %>

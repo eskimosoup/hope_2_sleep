@@ -1,0 +1,26 @@
+<% hide_right %>
+<% hide_left %>
+<h1><%= title "Paying Via Cheque" %></h1>
+
+<%- flash.each do |name, msg| -%>
+	<%= content_tag(:div, msg, :id => "flash_#{name}") unless msg.nil? %>
+<%- end -%>
+
+<% if @page_node %>
+  <%= @page_node.active_content.main_content %>
+<% end %>
+
+<% form_tag confirm_cheque_baskets_path do %>
+  <p>
+    <%= check_box_tag :terms_and_conditions, "1", false, :class => "checkbox" %>
+    I accept the <%= link_to "terms and conditions", url_for(PageNode.name_like("Terms and Conditions").first.path), :popup => true %>
+  </p>
+  
+  <p>  
+    <%= submit_tag "Confirm Cheque Payment", :class => "submit" %>
+  </p>
+<% end %>
+
+<p>
+  <%= link_to "Back to Payment Options", payment_baskets_path %>
+</p>

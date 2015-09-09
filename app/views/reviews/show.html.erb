@@ -1,0 +1,27 @@
+<h1><%= title "Review" %></h1>
+ 
+
+<p>
+  <strong>Product:</strong>
+  <%=h @review.product_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%=h @review.user_id %>
+</p>
+
+<p>
+  <strong>Review:</strong>
+  <%=h @review.review %>
+</p>
+
+
+ 
+<p>
+
+
+
+  <%= link_to "View All", reviews_path %>
+
+</p>

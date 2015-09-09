@@ -1,0 +1,138 @@
+<% determine_page_node %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<link rel="shortcut icon" href="/favicon.ico" />
+	
+	<title><%= h("#{SiteSetting.find_by_name("Site Name").value} - #{yield(:title) || "Untitled"}") %></title>
+	
+	<%= stylesheet_link_tag "webstyle.css" %>
+	<%= stylesheet_link_tag "tnymc.css" %>
+	<%= stylesheet_link_tag "lytebox_front.css" %>
+	<% if @current_page_node && @current_page_node.style %>
+		<%= stylesheet_link_tag @current_page_node.style %>
+	<% end %>
+	
+	<%= javascript_include_tag "prototype" %>
+	<%= javascript_include_tag "lytebox" %>
+	<script type="text/javascript" src="/javascripts/script-styles.js"></script>
+	
+	<% if @include_tinymce_script -%>
+	  <%= javascript_include_tag "tiny_mce/tiny_mce.js" %>
+	  <%= javascript_include_tag "tiny_mce_config" %>
+	<% end -%>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+
+<body>
+	
+<%# render :partial => "shared/admin_widget" %>
+
+<div class="maincontainer">
+	<p class="skip"><a href="#content" accesskey="s">Skip to the main content</a></p>
+	
+	
+	  <div class="top">
+    
+		  <%= link_to image_tag("logo.jpg", :alt => SiteSetting.find_by_name("Site Name").value, :title => SiteSetting.find_by_name("Site Name").value, :border => "0", :hspace => "0", :vspace => "0", :class => "logo"), {:controller => 'web', :action => 'index'} %>
+	  
+      <div class="top_right">
+      		<div class="top_basket">
+						<%= render "baskets/navigation" %>
+						<%= render "users/navigation" %>
+          </div>
+          <div class="navigation">
+            <%= render :partial => "shared/top_navigation" %>
+          </div>
+          
+      </div>
+      
+    </div>
+	
+	
+	<div id="content">
+		
+  	<% if hide_left? && hide_right? %>
+		
+			<%= @content_for_layout %>
+			
+		<% elsif hide_left? %>
+			
+		<div class="content_left">
+      
+    <% if params[:controller] == "products" %>
+	    <div class="breadcrumbs">
+		    <%= render :partial => "shared/breadcrumbs" %>
+	    </div>
+    <% end %>
+  
+		
+		<%- unless hide_flash? -%>
+		  <%- flash.each do |name, msg| -%>
+				<%= content_tag :div, msg, :id => "flash_#{name}" %>
+			<%- end -%>
+		<%- end -%>
+      
+				<%= @content_for_layout %>
+			</div>
+			
+			<div class="right">
+      	<div class="phone"><span>Freephone:</span> 0800 002 9711</div>
+  		<%= yield :right %>
+      
+      <% unless hide_news? %>
+  		  <%= render "articles/articles" %>
+  		<% end %>
+			<%= render "shared/links" %>
+			</div>
+			
+		<% elsif hide_right? %>
+		
+			<div class="left">
+	    	<%= yield :left %>
+			</div>
+			
+			<div class="content_right">
+				<%= @content_for_layout %>
+			</div>
+		
+		<% else %>
+			
+			<div class="left">
+				<%= yield :left %>	
+			</div>
+			
+			<div class="content_middle">
+				<%= @content_for_layout %>
+			</div>
+			
+			<div class="right">
+				<%= yield :right %>	
+				<%= render "articles/articles" %>
+			</div>
+			
+		<% end %>
+			
+  	
+    <div class="clear"></div>
+	</div>
+	
+	<div class="footer">
+    <p>
+    	<span>&copy; <%= h SiteSetting.find_by_name("Site Name").value %> | 
+      <%= link_to("Privacy Policy", url_for(PageNode.name_like("Privacy Policy").first.path), {:accesskey => "s"}) if PageNode.name_like("Privacy Policy").first %> | 
+      <%= link_to("Terms &amp; Conditions", url_for(PageNode.name_like("Terms and Conditions").first.path), {:accesskey => "s"}) if PageNode.name_like("Terms and Conditions").first %> | 
+    	<%= link_to "Accessibility", {:controller => "web", :action => "accessibility"}, {:accesskey => "1"} %> | 
+    	<%= link_to("Site Map", url_for(PageNode.name_like("Site Map").first.path), {:accesskey => "s"}) if PageNode.name_like("Site Map").first %> | 
+      <a href="http://www.eskimosoup.co.uk" target="_blank">Web design by eskimosoup</a></span>
+      <%= image_tag "payment_types.gif", :alt => "Payment types accepted", :title => "Payment types accepted", :border => "0", :hspace => "0", :vspace => "0" %>
+  	</p>
+	</div>
+	
+</div>
+</body>
+</html>

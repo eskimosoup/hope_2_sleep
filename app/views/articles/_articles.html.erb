@@ -1,0 +1,10 @@
+<% articles = Article.active.latest(2) %>
+
+<% if articles.length > 0 %>
+  <div class="news_right">
+    <h2>News</h2>
+    <% for article in articles %>
+      <%= render "articles/article", :article => article, :grey => true %>
+    <% end %>
+  </div>
+<% end %>
