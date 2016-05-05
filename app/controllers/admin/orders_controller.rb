@@ -5,7 +5,25 @@ class Admin::OrdersController < Admin::AdminController
   end
 
   def index
-    @orders = Order.unrecycled.all(:order => "online_invoice_number desc").paginate(:page => params[:page], :per_page => 50)
+    params[:search] ||= {}
+    params[:search][:order] ||= "descend_by_online_invoice_number"
+    @search = Order.unrecycled.search(params[:search])
+    @orders = @search.paginate(:page => params[:page], :per_page => 50)
+    if Order.unrecycled.sort_by{|x| x.created_at}.first
+      date_1 = Order.unrecycled.sort_by{|x| x.created_at}.first.created_at.to_date
+      date_2 = Order.unrecycled.sort_by{|x| x.created_at}.last.created_at.to_date
+    else
+      date_1 = Date.today
+      date_2 = Date.today
+    end
+    if date_1 != date_2 
+      @dates = [["All Months", nil]]
+      @dates += (date_1..date_2).collect{|x| ["#{Date::MONTHNAMES[x.month]} #{x.year}", "#{x.year}-#{x.month}"] }.uniq
+    end
+    @total = 0
+    for order in @search
+      @total += order.total
+    end
   end  
 
   def new
